@@ -6,9 +6,17 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,67 +32,20 @@ public class User {
     @NotBlank(message = "Name can not be blank")
     private String name;
 
-    public User(Long userId, String username, String password, String email, String name) {
-        this.userId = userId;
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public User() {
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
 
     public void setPassword(String password) {
         String username = getUsername();
-        boolean isValid = true;
         for (int i = 0; i < username.length(); i++) {
-            if(i+2 > username.length()){
+            if (i + 2 > username.length()) {
                 break;
             }
-            String contain = username.substring(i,i+2);
-            if(password.contains(contain)){
-                isValid = false;
-                break;
+            String contain = username.substring(i, i + 2);
+            if (password.contains(contain)) {
+                throw new RuntimeException("Password should not contain username");
             }
         }
-        if (isValid) this.password = password;
+        this.password = password;
 
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
 }

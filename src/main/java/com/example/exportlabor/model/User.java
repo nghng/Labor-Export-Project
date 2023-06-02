@@ -17,6 +17,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,19 +34,19 @@ public class User {
     private String name;
 
 
-    public void setPassword(String password) {
-        String username = getUsername();
-        for (int i = 0; i < username.length(); i++) {
-            if (i + 2 > username.length()) {
-                break;
-            }
-            String contain = username.substring(i, i + 2);
-            if (password.contains(contain)) {
-                throw new RuntimeException("Password should not contain username");
-            }
-        }
-        this.password = password;
-
-    }
+//    public void setPassword(String password) {
+//        String username = getUsername();
+//        for (int i = 0; i < username.length(); i++) {
+//            if (i + 2 > username.length()) {
+//                break;
+//            }
+//            String contain = username.substring(i, i + 2);
+//            if (password.contains(contain)) {
+//                throw new RuntimeException("Password should not contain username");
+//            }
+//        }
+//        this.password = password;
+//
+//    }
 
 }

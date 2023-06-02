@@ -1,9 +1,7 @@
 package com.example.exportlabor.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Past;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,6 +23,16 @@ public class Worker extends User {
         FEMALE;
     }
 
+    private enum Education {
+        PRIMARY_SCHOOL,
+        SECONDARY_SCHOOL,
+        HIGH_SCHOOL,
+        BACHELOR_DEGREE,
+        MASTER_DEGREE,
+        PHD_DEGREE,
+        NONE
+    }
+
     private static final int MAX_GENDER_VALUE = 1;
 
 
@@ -32,20 +40,16 @@ public class Worker extends User {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dob;
     @Enumerated(EnumType.ORDINAL)
-    @NotBlank(message = "Gender can not be blank")
-    @Size(max = MAX_GENDER_VALUE)
     private Gender gender;
     @NotBlank(message = "Skill can not be blank")
     private String skill;
-    @NotBlank(message = "Education can not be blank")
-    private String education;
+    @Enumerated(EnumType.STRING)
+    @NotNull(message = "Education can not be null")
+    private Education education;
     @NotBlank(message = "Work experience can not be blank")
-
     private String workExperience;
-    @NotBlank(message = "Desire salary can not be blank")
-    @Size(min = 0)
+    @DecimalMin(value  = "0.1")
     private Double desiredSalary;
-
 
 
 }

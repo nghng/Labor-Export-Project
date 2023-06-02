@@ -27,10 +27,11 @@ public class User {
     private String username;
     @Size(min = 8, message = "Password must be at least 8 characters long")
     @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$", message = "Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character")
+    @NotBlank(message = "Password can't be blank")
     private String password;
     @Email(message = "Invalid email address")
     @Column(unique = true)
-
+    @NotBlank(message = "Email can't be null")
     private String email;
     @NotBlank(message = "Name can not be blank")
     private String name;

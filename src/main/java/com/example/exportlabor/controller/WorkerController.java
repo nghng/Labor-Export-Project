@@ -37,9 +37,10 @@ public class WorkerController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<Worker> updateWorker(@RequestBody Worker worker) {
+    public ResponseEntity<Worker> updateWorker(@Valid @RequestBody Worker worker) {
+        workerService.findWorkerById(worker.getUserId());
         Worker updateWorker = workerService.updateWorker(worker);
-        return new ResponseEntity<>(updateWorker, HttpStatus.CREATED);
+        return new ResponseEntity<>(updateWorker, HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")

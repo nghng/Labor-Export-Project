@@ -3,24 +3,19 @@ package com.example.exportlabor.controller;
 import com.example.exportlabor.model.Worker;
 import com.example.exportlabor.service.WorkerService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/worker")
 public class WorkerController {
     private final WorkerService workerService;
 
-    public WorkerController(WorkerService workerService) {
+
+    public WorkerController(WorkerService workerService, ExceptionHandlerController exceptionHandlerController) {
         this.workerService = workerService;
     }
 
@@ -53,19 +48,7 @@ public class WorkerController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @ControllerAdvice
-    public class MyExceptionHandler {
-        @ExceptionHandler(MethodArgumentNotValidException.class)
-        public ResponseEntity<?> handleValidationExceptions(MethodArgumentNotValidException ex) {
-            Map<String, String> errors = new HashMap<>();
-            ex.getBindingResult().getAllErrors().forEach((error) -> {
-                String fieldName = ((FieldError) error).getField();
-                String errorMessage = error.getDefaultMessage();
-                errors.put(fieldName, errorMessage);
-            });
-            return ResponseEntity.badRequest().body(errors);
-        }
-    }
+
 
 }
 

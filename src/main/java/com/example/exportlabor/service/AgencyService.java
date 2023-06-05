@@ -31,7 +31,9 @@ public class AgencyService {
     }
 
     public void updateAgency(Agency agency){
-        agencyRepository.save(agency);
+        if(agencyRepository.existsById(agency.getAgencyId())){
+            agencyRepository.save(agency);
+        }else throw new AgencyNotFoundException();
     }
 
 }

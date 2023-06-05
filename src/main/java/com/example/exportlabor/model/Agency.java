@@ -3,13 +3,11 @@ package com.example.exportlabor.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.List;
 
 @Entity
 @Setter
@@ -27,10 +25,12 @@ public class Agency {
     private String name;
     @NotBlank(message = "Agency must have a country name")
     private String destinationCountry;
-    @Email
+    @Email(message = "Invalid email address")
+    @Column(unique = true)
+    @NotBlank(message = "Email can't be blank")
     private String email;
     @NotBlank(message = "Agency must have a contact number")
-    @Size(min = 11)
+    @Pattern(regexp = "^\\d{10}$", message = "Invalid phone number format")
     private String contactNumber;
 
 

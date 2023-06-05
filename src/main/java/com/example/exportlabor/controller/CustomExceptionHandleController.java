@@ -1,5 +1,6 @@
 package com.example.exportlabor.controller;
 
+import com.example.exportlabor.exception.AgencyNotFoundException;
 import com.example.exportlabor.exception.ApiError;
 import com.example.exportlabor.exception.WorkerNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -16,5 +17,10 @@ public class CustomExceptionHandleController extends ResponseEntityExceptionHand
     @ExceptionHandler(value = WorkerNotFoundException.class)
     public ResponseEntity<Object> handleWorkerNotFoundException(WorkerNotFoundException workerNotFoundException, WebRequest request) {
         return new ResponseEntity<>(new ApiError(workerNotFoundException.getMessage(), HttpStatus.NOT_FOUND, LocalDateTime.now()), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(value = AgencyNotFoundException.class)
+    public ResponseEntity<Object> handleAgencyNotFoundException(AgencyNotFoundException agencyNotFoundException, WebRequest request){
+        return new ResponseEntity<>(new ApiError(agencyNotFoundException.getMessage(), HttpStatus.NOT_FOUND, LocalDateTime.now()), HttpStatus.NOT_FOUND);
     }
 }

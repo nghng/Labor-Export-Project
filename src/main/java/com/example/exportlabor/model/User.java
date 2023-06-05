@@ -31,7 +31,7 @@ public class User {
     private String password;
     @Email(message = "Invalid email address")
     @Column(unique = true)
-    @NotBlank(message = "Email can't be null")
+    @NotBlank(message = "Email can't be blank")
     private String email;
     @NotBlank(message = "Name can not be blank")
     private String name;

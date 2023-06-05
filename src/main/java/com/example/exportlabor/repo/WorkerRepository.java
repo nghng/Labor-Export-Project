@@ -23,4 +23,5 @@ public interface WorkerRepository extends JpaRepository<Worker, Long> {
     void customInsertWithObject(@Param("worker") Worker worker);
 
 
+
 }

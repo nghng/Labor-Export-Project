@@ -33,6 +33,7 @@ public class WorkerController {
 
     @PostMapping("/add")
     public ResponseEntity<Worker> addWorker(@Valid @RequestBody Worker worker) {
+        workerService.addWorker(worker);
         return new ResponseEntity<>( HttpStatus.CREATED);
     }
 

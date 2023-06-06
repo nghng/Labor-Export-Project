@@ -2,9 +2,12 @@ package com.example.exportlabor.controller;
 
 import com.example.exportlabor.model.Worker;
 import com.example.exportlabor.service.WorkerService;
+import com.example.exportlabor.validation.AddWorkerValidationGroup;
+import jakarta.persistence.Basic;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,14 +35,13 @@ public class WorkerController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Worker> addWorker(@Valid @RequestBody Worker worker) {
+    public ResponseEntity<Worker> addWorker(@Validated(AddWorkerValidationGroup.class) @RequestBody Worker worker) {
         workerService.addWorker(worker);
         return new ResponseEntity<>( HttpStatus.CREATED);
     }
 
     @PutMapping("/update")
     public ResponseEntity<Worker> updateWorker(@Valid @RequestBody Worker worker) {
-        workerService.findWorkerById(worker.getUserId());
         Worker updateWorker = workerService.updateWorker(worker);
         return new ResponseEntity<>(updateWorker, HttpStatus.OK);
     }

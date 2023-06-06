@@ -1,5 +1,6 @@
 package com.example.exportlabor.model;
 
+import com.example.exportlabor.validation.AddWorkerValidationGroup;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
@@ -38,17 +39,19 @@ public class Worker extends User {
 
     @Past(message = "Date of birth must be less than today")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(groups = AddWorkerValidationGroup.class)
     private Date dob;
     @Enumerated(EnumType.ORDINAL)
+    @NotNull(groups = AddWorkerValidationGroup.class)
     private Gender gender;
-    @NotBlank(message = "Skill can not be blank")
+    @NotBlank(message = "Skill can not be blank",groups = AddWorkerValidationGroup.class)
     private String skill;
     @Enumerated(EnumType.STRING)
-    @NotNull(message = "Education can not be null")
+    @NotNull(message = "Education can not be null",groups = AddWorkerValidationGroup.class)
     private Education education;
-    @NotBlank(message = "Work experience can not be blank")
+    @NotBlank(message = "Work experience can not be blank",groups = AddWorkerValidationGroup.class)
     private String workExperience;
-    @DecimalMin(value  = "0.1")
+    @DecimalMin(value  = "0.1",groups = AddWorkerValidationGroup.class)
     private Double desiredSalary;
 
 

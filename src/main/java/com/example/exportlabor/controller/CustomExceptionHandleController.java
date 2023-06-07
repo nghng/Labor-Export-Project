@@ -31,4 +31,9 @@ public class CustomExceptionHandleController extends ResponseEntityExceptionHand
     public ResponseEntity<Object> handleEmployerNotFoundException(EmployerNotFoundException employerNotFoundException, WebRequest request){
         return new ResponseEntity<>(new ApiError(employerNotFoundException.getMessage(), HttpStatus.NOT_FOUND, LocalDateTime.now()), HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(value = JobPostingNotFound.class)
+    public ResponseEntity<Object> handleJobPostingNotFound(JobPostingNotFound jobPostingNotFound, WebRequest request){
+        return new ResponseEntity<>(new ApiError(jobPostingNotFound.getMessage(), HttpStatus.NOT_FOUND, LocalDateTime.now()), HttpStatus.NOT_FOUND);
+    }
 }
